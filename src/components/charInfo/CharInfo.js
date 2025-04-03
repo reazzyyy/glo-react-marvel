@@ -36,6 +36,8 @@ class CharInfo extends Component {
 
     this.onCahrLoading();
 
+    // this.foo.bar = 0; test error boundary
+
     this.marvelService
       .getCharacter(charId)
       .then(this.onCharLoaded)
