@@ -30,9 +30,13 @@ class CharList extends Component {
 
   render() {
     const { charList, loading, error } = this.state;
+    const { onCharSelected } = this.props;
+
     const errorMessage = error ? <ErrorMessage /> : null;
     const spinner = loading ? <Spinner /> : null;
-    const content = !(loading || error) ? <View charList={charList} /> : null;
+    const content = !(loading || error) ? (
+      <View charList={charList} onCharSelected={onCharSelected} />
+    ) : null;
 
     return (
       <div className="char__list">
@@ -47,24 +51,32 @@ class CharList extends Component {
   }
 }
 
-const View = ({ charList }) => {
+const View = ({ charList, onCharSelected }) => {
   return (
     <ul className="char__grid">
       {charList.map((char) => {
-        return <CharView char={char} key={char.name} />;
+        return (
+          <CharView
+            char={char}
+            key={char.id}
+            onClick={() => {
+              onCharSelected(char.id);
+            }}
+          ></CharView>
+        );
       })}
     </ul>
   );
 };
 
-const CharView = ({ char }) => {
+const CharView = ({ char, onClick }) => {
   const { name, thumbnail } = char;
 
   return (
-    <div className="char__item">
+    <li className="char__item" onClick={onClick}>
       <img src={thumbnail} alt={name} />
       <div className="char__name">{name}</div>
-    </div>
+    </li>
   );
 };
 

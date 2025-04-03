@@ -23,12 +23,17 @@ class RandomChar extends Component {
     this.setState({ char, loading: false });
   };
 
+  onCahrLoading = () => {
+    this.setState({ loading: true });
+  };
+
   onError = () => {
     this.setState({ loading: false, error: true });
   };
 
   updateChar = () => {
     const id = Math.floor(Math.random() * 20);
+    this.onCahrLoading();
     this.setState({ error: false });
 
     this.marvelService
